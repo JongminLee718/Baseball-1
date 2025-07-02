@@ -6,6 +6,10 @@ TEST(Baseball, TryGameTest) {
 	EXPECT_EQ(1, 1);
 }
 
+TEST(Baseball, ThrowExceptionWhenInputLengthIsUnmatched) {
+	Baseball game;
+	EXPECT_THROW(game.guess(string("12")), length_error);
+}
 
 int main() {
 	testing::InitGoogleMock();
