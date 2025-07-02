@@ -2,13 +2,25 @@
 #include "baseball.cpp"
 #include <vector>
 
-TEST(Baseball, TryGameTest) {
-	EXPECT_EQ(1, 1);
-}
+using namespace testing;
 
-TEST(Baseball, ThrowExceptionWhenInputLengthIsUnmatched) {
+class BaseballFixture : public Test {
+public:
 	Baseball game;
-	EXPECT_THROW(game.guess(string("12")), length_error);
+	void assertIllegalArgument(string guessNum) {
+		try {
+			game.guess(guessNum);
+			FAIL();
+		}
+		catch (exception e) {
+
+		}
+	}
+};
+
+TEST_F(BaseballFixture, ThrowExceptionWhenInvalidCase) {
+	assertIllegalArgument("12");
+	assertIllegalArgument("12s");
 }
 
 int main() {
