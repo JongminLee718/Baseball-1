@@ -13,11 +13,36 @@ public:
 
 	GuessResult guess(const string &guessNumber) {
 		assertIllegalArgument(guessNumber);
-		return { true,3,0 };
+		bool result = false;
+		int strikes = getStrikesCount(guessNumber);
+		int balls = balls = getBallCount(guessNumber);
+
+		if (strikes == 3) result = true;
+		return { result,strikes,balls };
 	}
 
 private:
 	string question;
+	int getStrikesCount(const std::string& guessNumber)
+	{
+		int strikes = 0;
+		for (int strIdx = 0;strIdx < guessNumber.size(); strIdx++) {
+			if (question[strIdx] == guessNumber[strIdx]) strikes++;
+		}
+		return strikes;
+	}
+
+	int getBallCount(const std::string& guessNumber)
+	{
+		int balls = 0;
+		for (int queStrIdx = 0;queStrIdx < question.size(); queStrIdx++) {
+			for (int guessStrIdx = 0;guessStrIdx < guessNumber.size(); guessStrIdx++) {
+				if (queStrIdx == guessStrIdx) continue;
+				if (question[queStrIdx] == guessNumber[guessStrIdx]) balls++;
+			}
+		}
+		return balls;
+	}
 
 	void assertIllegalArgument(const std::string& guessNumber)
 	{
