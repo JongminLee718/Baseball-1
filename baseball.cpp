@@ -1,20 +1,31 @@
 #include <stdexcept>
 
 using namespace std;
+
+struct GuessResult {
+	int solved;
+	int strikes;
+	int balls;
+};
 class Baseball {
 public:
-	void guess(const string &guessNumber) {
+	Baseball(const string &str) : question{ str } {}
+
+	GuessResult guess(const string &guessNumber) {
 		assertIllegalArgument(guessNumber);
+		return { true,3,0 };
 	}
 
 private:
+	string question;
+
 	void assertIllegalArgument(const std::string& guessNumber)
 	{
 		if (guessNumber.length() != 3) {
 			throw length_error("must be three letters");
 		}
 		for (char ch : guessNumber) {
-			if (ch < '0' || ch >'9') continue;
+			if (ch >= '0' && ch <= '9') continue;
 			throw invalid_argument("must be number");
 		}
 		if (isDuplicatedNumber(guessNumber)) {
